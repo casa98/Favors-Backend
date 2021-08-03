@@ -4,6 +4,10 @@ require('dotenv').config();
 // Express App
 const app = express()
 
+// Connect to MongoDB
+const {dbConnection} = require('./database/config');
+dbConnection();
+
 // Read and parse body responses
 app.use(express.json());
 

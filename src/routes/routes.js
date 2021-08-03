@@ -1,7 +1,16 @@
 const {Router} = require('express');
 const router = Router();
 
-router.post('/deviceToken', (req, res) => {
+router.get('/getDeviceToken/:uid', (req, res) => {
+    const uid = req.params.uid;
+    // TODO: Search in DB token corresponding to this uid
+    res.status(200).json({
+        ok: true,
+        message: uid
+    });
+});
+
+router.post('/saveDeviceToken', (req, res) => {
     const {uid, deviceToken} = req.body
     console.log(uid);
     console.log(deviceToken);
