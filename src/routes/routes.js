@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const sendNotification = require('../models/send_notification');
 
 const {Router} = require('express');
 const router = Router();
@@ -42,6 +43,8 @@ router.post('/saveDeviceToken', async (req, res) => {
         res.status(400).json({ok: false});
     }
 });
+
+router.get('/sendNotification', sendNotification);
 
 
 module.exports = router;
