@@ -6,8 +6,8 @@ const router = Router();
 
 
 router.post('/saveDeviceToken', async (req, res) => {
-    //TODO: Add middle to verify these 2 values are coming from client
-    const {uid, deviceToken} = req.body
+    //TODO: Add middleware to verify these 2 values are coming from client
+    const {uid, deviceToken} = req.body;
     console.log('uid:', uid);
     console.log('deviceToken:', deviceToken);
 
@@ -44,7 +44,7 @@ router.post('/saveDeviceToken', async (req, res) => {
     }
 });
 
-router.get('/sendNotification', sendNotification);
+router.post('/sendNotification', sendNotification);
 
 
 module.exports = router;

@@ -1,3 +1,5 @@
+const User = require('../models/user');
+
 const axios = require('axios');
 require('dotenv').config();
 
@@ -11,11 +13,20 @@ const axiosHeaders = {
 }
 
 const sendNotification = async (req, res) =>{
-    
+    //TODO: Add middleware to verify these 2 values are coming from client
+    const {to, title, body} = req.body;
+    console.log(to);
+    console.log(title);
+    console.log(body);
+
+    // Get the deviceToken corresponding to {to}
+    const {deviceToken} = await User.findOne({_id: to});
+    console.log('deviceToken:', deviceToken);
+
     const notification = {
         "notification": {
-            "body": "Notification from my server hehe",
-            "title": "Hello!",
+            "body": body,
+            "title": title,
             "android_channel_id": "favors_channel"
         },
         "priority": "high",
@@ -23,8 +34,7 @@ const sendNotification = async (req, res) =>{
             "id": "1",
             "status": "done"
         },
-        "channesl": "favors_channel",
-        "to": "cLxBlUDDSaOgepNAENsGlP:APA91bFIJfYTv1unxa_VIIALzt3JlnB-1afs5xt5u9KmffmKcO5iXHkPXSXH_IoJvWYLiy7atW3Fxsmob_r7V6-c55lL5sNclbHtOAFW-X_6VJzhVgPqaFsP1-YdhdWgVcD0iV_Ov7m0"
+        "to": deviceToken,
     }
 
     axios.post(
@@ -33,7 +43,6 @@ const sendNotification = async (req, res) =>{
         axiosHeaders
     )
     .then(response => {
-        console.log(response.data.url);
         console.log(response.data.explanation);
         res.status(200).json({ok: true});
 
